@@ -201,7 +201,7 @@ if [ $(id -u) -eq 0 ]; then
     # Configuration Variable
     files=(zoo.cfg);
     for configuration in "${files[@]}" ; do 
-        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Hadoop-Environment/master/kafka-$distribution/config/$configuration -O /tmp/$configuration;
+        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$distribution/conf/$configuration -O /tmp/$configuration;
         rm $ZOOKEEPER_HOME/conf/$configuration;
         chmod 674 /tmp/$configuration;
         mv /tmp/$configuration $ZOOKEEPER_HOME/conf;
