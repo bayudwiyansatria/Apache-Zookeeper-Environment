@@ -156,7 +156,7 @@ if [ $(id -u) -eq 0 ]; then
             fi
             usermod -aG $username $password;
         else
-            read -p "Do you want to use exisiting user for hadoop administrator? (y/N) [ENTER] (y) " existinguser;
+            read -p "Do you want to use exisiting user for zookeper administrator? (y/N) [ENTER] (y) " existinguser;
             if [ "$existinguser" == "y" ] ; then
                 read -p "Enter username : " username;
                 egrep "^$username" /etc/passwd >/dev/null;
@@ -336,7 +336,7 @@ if [ $(id -u) -eq 0 ]; then
     echo "################################################";
     echo "";
 
-    echo "Documentation firewall rule for Kafka https://kafka.apache.org/";
+    echo "Documentation firewall rule for Zookeeper https://zookeeper.apache.org/";
 
     if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
         echo "Enable Firewall Services";
@@ -348,7 +348,7 @@ if [ $(id -u) -eq 0 ]; then
         systemctl start firewalld;
         systemctl enable firewalld;
 
-        echo "Adding common firewall rule for kafka security";
+        echo "Adding common firewall rule for zookeeper security";
         firewall=$(firewall-cmd --get-default-zone);
         firewall-cmd --zone="$firewall" --permanent --add-port=2181/tcp;
         firewall-cmd --zone="$firewall" --permanent --add-port=2888/tcp;
