@@ -202,7 +202,9 @@ if [ $(id -u) -eq 0 ]; then
     files=(zoo.cfg);
     for configuration in "${files[@]}" ; do 
         wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$distribution/conf/$configuration -O /tmp/$configuration;
-        rm $ZOOKEEPER_HOME/conf/$configuration;
+        if [ -e "$configuration" ] ; then
+            rm $ZOOKEEPER_HOME/conf/$configuration;
+        fi
         chmod 674 /tmp/$configuration;
         mv /tmp/$configuration $ZOOKEEPER_HOME/conf;
     done
