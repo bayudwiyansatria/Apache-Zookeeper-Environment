@@ -38,18 +38,18 @@ if [ $(id -u) -eq 0 ]; then
     os=$(printf '%s\n' "$os" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
 
     # Update OS Current Distribution
-    if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
+    if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
         apt-get -y update && apt-get -y upgrade;
-    elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ] ; then
+    elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ] ; then
         yum -y update && yum -y upgrade;
     else
         exit 1;
     fi
 
     # Required Packages
-    if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
+    if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
         apt-get -y install git && apt-get -y install wget && apt-get -y install ipcalc;
-    elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ]; then
+    elif [ "$os"=="centos" ] || [ "$os"== "rhel" ] || [ "$os"=="fedora" ]; then
         yum -y install git && yum -y install wget && yum -y install ipcalc;
     else
         exit 1;
@@ -199,9 +199,9 @@ if [ $(id -u) -eq 0 ]; then
     java=$(echo "$JAVA_HOME");
 
     if [ -z "$java" ] ; then
-        if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
+        if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
             apt-get -y install openjdk-8-jdk;
-        elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ]; then
+        elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ]; then
             yum -y install java-1.8.0-openjdk;  
         else 
             exit 1;  
@@ -261,7 +261,7 @@ if [ $(id -u) -eq 0 ]; then
 
     echo "Documentation firewall rule for zookeper https://kafka.apache.org/";
 
-    if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
+    if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
         echo "Enable Firewall Services";
         echo "";
         systemctl start ufw;
@@ -285,7 +285,7 @@ if [ $(id -u) -eq 0 ]; then
         echo "Success Adding Firewall Rule";
         echo "";
 
-    elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ] ; then 
+    elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ] ; then 
         echo "Enable Firewall Services";
         echo "";
         systemctl start firewalld;
