@@ -29,9 +29,23 @@
 
 **Official Website: https://www.bayudwiyansatria.com/**
 
-Machine Learning of Bayu Dwiyan Satria.
+Apache ZooKeeper is an effort to develop and maintain an open-source server which enables highly reliable distributed coordination.
 
-Library Included Clustering, Classfication, Neural Network, etc.
+ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them, which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management complexity when the applications are deployed.
+
+Learn more about ZooKeeper on the <a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index">ZooKeeper Wiki</a>.
+
+## Getting Started
+
+Start by installing ZooKeeper on a single machine or a very small cluster.
+
+```shell
+wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/install.sh;
+chmod 777 install.sh;
+./install.sh
+```
+
+Learn about ZooKeeper by reading the <a href="https://zookeeper.apache.org/doc/current/index.html">documentation</a>.
 
 ## Dependencies
 
