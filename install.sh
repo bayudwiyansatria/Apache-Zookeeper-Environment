@@ -309,6 +309,26 @@ if [ $(id -u) -eq 0 ]; then
     if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
         echo "Enable Firewall Services";
         echo "";
+        systemctl start ufw;
+        systemctl enable ufw;
+
+        echo "Adding common firewall rule for zookeeper security";
+        ufw allow 2181/tcp;
+        ufw allow 2888/tcp;
+        ufw allow 3888/tcp;
+        
+        echo "Allowing DNS Services";
+        ufw allow dns;
+        echo "";
+
+        echo "Reload Firewall Services";
+        systemctl stop ufw;
+        systemctl start ufw;
+        echo "";
+
+        echo "";
+        echo "Success Adding Firewall Rule";
+        echo "";
 
     elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ] ; then 
         echo "Enable Firewall Services";
@@ -377,7 +397,7 @@ if [ $(id -u) -eq 0 ]; then
                     ssh-copy-id -i ~/.ssh/id_rsa.pub "$username@$ipaddr"
                     ssh-copy-id -i ~/.ssh/id_rsa.pub "$worker"
                 
-                    ssh $worker "wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeper-Environment/master/express-install.sh";
+                    ssh $worker "wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/express-install.sh";
                     ssh $worker "chmod 777 express-install.sh";
                     ssh $worker "./express-install.sh" $version "$mirror" "$username" "$password" "$ipaddr";
                     scp /home/$username/.ssh/authorized_keys /home/$username/.ssh/id_rsa /home/$username/.ssh/id_rsa.pub $username@$worker:/home/$username/.ssh/
@@ -400,7 +420,7 @@ if [ $(id -u) -eq 0 ]; then
     echo "################################################";
     echo "";
 
-    echo "Formating NameNode";
+    echo "Formating Zookeeper";
     echo "";
     
     if [ "$5" ] ; then
