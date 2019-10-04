@@ -162,7 +162,7 @@ if [ $(id -u) -eq 0 ]; then
     # Configuration Variable
     files=(zoo.cfg);
     for configuration in "${files[@]}" ; do 
-        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$distribution/conf/$configuration -O /tmp/$configuration;
+        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$packages/conf/$configuration -O /tmp/$configuration;
         if [ -e "$configuration" ] ; then
             rm $ZOOKEEPER_HOME/conf/$configuration;
         fi
