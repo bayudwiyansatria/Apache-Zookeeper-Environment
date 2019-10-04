@@ -378,5 +378,5 @@ if [ $(id -u) -eq 0 ]; then
 
 else
     echo "Only root may can install to the system";
-    exit 1;
+    exit 1; 
 fi

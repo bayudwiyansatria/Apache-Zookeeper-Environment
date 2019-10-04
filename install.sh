@@ -41,10 +41,10 @@ if [ $(id -u) -eq 0 ]; then
     read -p "Update Distro (y/n) [ENTER] (y)(Recommended): " update;
     update=$(printf '%s\n' "$update" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
 
-    if [ "$update"=="y" ] ; then 
-        if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
+    if [ "$update" == "y" ] ; then 
+        if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
             apt-get -y update && apt-get -y upgrade;
-        elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ] ; then
+        elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ] ; then
             yum -y update && yum -y upgrade;
         else
             exit 1;
@@ -52,16 +52,16 @@ if [ $(id -u) -eq 0 ]; then
     fi
 
     # Required Packages
-    if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
+    if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
         apt-get -y install git && apt-get -y install wget && apt-get -y install ipcalc;
-    elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ]; then
+    elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ]; then
         yum -y install git && yum -y install wget && yum -y install ipcalc;
     else
         exit 1;
     fi
 
     echo "################################################";
-    echo "##          Check Zookeeper Environment          ##";
+    echo "##          Check Zookeeper Environment        ##";
     echo "################################################";
     echo "";
 
@@ -143,7 +143,7 @@ if [ $(id -u) -eq 0 ]; then
     createuser=$(printf '%s\n' "$createuser" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
 
     if [ -n createuser ] ; then
-        if [ "$createuser"=="y" ] ; then
+        if [ "$createuser" == "y" ] ; then
             read -p "Enter username : " username;
             read -s -p "Enter password : " password;
             egrep "^$username" /etc/passwd >/dev/null;
@@ -157,7 +157,7 @@ if [ $(id -u) -eq 0 ]; then
             usermod -aG $username $password;
         else
             read -p "Do you want to use exisiting user for zookeper administrator? (y/N) [ENTER] (y) " existinguser;
-            if [ "$existinguser"=="y" ] ; then
+            if [ "$existinguser" == "y" ] ; then
                 read -p "Enter username : " username;
                 egrep "^$username" /etc/passwd >/dev/null;
                 if [ $? -eq 0 ]; then
@@ -221,11 +221,11 @@ if [ $(id -u) -eq 0 ]; then
 
     serverid=1;
     if [ -n "$master" ] ; then
-        if [ "$master"=="y" ] ; then
+        if [ "$master" == "y" ] ; then
             read -p "Do you want set this host as a worker to?? (y/N) [ENTER] (y): "  work;
             work=$(printf '%s\n' "$work" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
             if [ -n "$work" ] ; then
-                if [ "$work"=="y" ] ; then
+                if [ "$work" == "y" ] ; then
                     echo "Master & Worker only serve";
                     echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
                 else
@@ -244,7 +244,7 @@ if [ $(id -u) -eq 0 ]; then
         echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
     fi
 
-    if [ "$master"=="n" ] ; then
+    if [ "$master" == "n" ] ; then
         read -p "Do you want set this host as a worker to?? (y/N) [ENTER] (y): "  masterhost;
         masterhost=$(printf '%s\n' "$masterhost" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
         for configuration in "${files[@]}" ; do
@@ -278,9 +278,9 @@ if [ $(id -u) -eq 0 ]; then
     java=$(echo "$JAVA_HOME");
 
     if [ -z "$java" ] ; then
-        if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
+        if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
             apt-get -y install openjdk-8-jdk;
-        elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ]; then
+        elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ]; then
             yum -y install java-1.8.0-openjdk;  
         else 
             exit 1;  
@@ -340,11 +340,11 @@ if [ $(id -u) -eq 0 ]; then
 
     echo "Documentation firewall rule for Zookeeper https://zookeeper.apache.org/";
 
-    if [ "$os"=="ubuntu" ] || [ "$os"=="debian" ] ; then
+    if [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] ; then
         echo "Enable Firewall Services";
         echo "";
 
-    elif [ "$os"=="centos" ] || [ "$os"=="rhel" ] || [ "$os"=="fedora" ] ; then 
+    elif [ "$os" == "centos" ] || [ "$os" == "rhel" ] || [ "$os" == "fedora" ] ; then 
         echo "Enable Firewall Services";
         echo "";
         systemctl start firewalld;
@@ -371,7 +371,7 @@ if [ $(id -u) -eq 0 ]; then
         exit 1;
     fi
 
-    if [ "$master"=="n" ] ; then 
+    if [ "$master" == "n" ] ; then 
         echo "Your worker already setup";
     else
         echo "";
@@ -384,8 +384,8 @@ if [ $(id -u) -eq 0 ]; then
         workeraccept=$(printf '%s\n' "$workeraccept" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
 
         if [ -n "$workeraccept" ] ; then 
-            if [ "$workeraccept"=="y" ] ; then 
-                while [ "$workeraccept"=="y" ] ; do 
+            if [ "$workeraccept" == "y" ] ; then 
+                while [ "$workeraccept" == "y" ] ; do 
                     read -p "Please enter worker IP Address [ENTER] " worker;
                     echo -e  ''$worker' # Worker' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
                     if [[ -f "~/.ssh/id_rsa" && -f "~/.ssh/id_rsa.pub" ]]; then 
@@ -481,7 +481,7 @@ if [ $(id -u) -eq 0 ]; then
 
     read -p "Do you want to reboot? (y/N) [ENTER] [n] : "  reboot;
     if [ -n "$reboot" ] ; then
-        if [ "$reboot"=="y" ]; then
+        if [ "$reboot" == "y" ]; then
             reboot;
         else
             echo "We highly recomended to reboot your system";
