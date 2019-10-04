@@ -201,7 +201,7 @@ if [ $(id -u) -eq 0 ]; then
     # Configuration Variable
     files=(zoo.cfg);
     for configuration in "${files[@]}" ; do 
-        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$distribution/conf/$configuration -O /tmp/$configuration;
+        wget https://raw.githubusercontent.com/bayudwiyansatria/Apache-Zookeeper-Environment/master/$packages/conf/$configuration -O /tmp/$configuration;
         if [ -e "$configuration" ] ; then
             rm $ZOOKEEPER_HOME/conf/$configuration;
         fi
@@ -220,41 +220,7 @@ if [ $(id -u) -eq 0 ]; then
     hostname=$(echo "$HOSTNAME");
 
     serverid=1;
-    if [ -n "$master" ] ; then
-        if [ "$master" == "y" ] ; then
-            read -p "Do you want set this host as a worker to?? (y/N) [ENTER] (y): "  work;
-            work=$(printf '%s\n' "$work" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
-            if [ -n "$work" ] ; then
-                if [ "$work" == "y" ] ; then
-                    echo "Master & Worker only serve";
-                    echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
-                else
-                    echo "Master only serve";
-                fi
-            else
-                echo "Master & Worker only serve";
-                echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
-            fi
-        else
-            echo "Worker only serve";
-            echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
-        fi
-    else
-        echo "Worker only serve";
-        echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
-    fi
-
-    if [ "$master" == "n" ] ; then
-        read -p "Do you want set this host as a worker to?? (y/N) [ENTER] (y): "  masterhost;
-        masterhost=$(printf '%s\n' "$masterhost" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g');
-        for configuration in "${files[@]}" ; do
-            sed -i "s/localhost/$masterhost/g" $ZOOKEEPER_HOME/conf/$configuration;
-        done
-    else
-        for configuration in "${files[@]}" ; do
-            sed -i "s/localhost/$ipaddr/g" $ZOOKEEPER_HOME/conf/$configuration;
-        done
-    fi
+    echo -e 'server.'$serverid'='$ipaddr':2888:3888 # '$hostname'' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
 
     chown $username:$username -R $ZOOKEEPER_HOME;
     chmod g+rwx -R $ZOOKEEPER_HOME;
@@ -416,7 +382,7 @@ if [ $(id -u) -eq 0 ]; then
                     ssh $worker "./express-install.sh" $version "$mirror" "$username" "$password" "$ipaddr";
                     scp /home/$username/.ssh/authorized_keys /home/$username/.ssh/id_rsa /home/$username/.ssh/id_rsa.pub $username@$worker:/home/$username/.ssh/
                     ssh $worker "chown -R $username:$username /home/$username/.ssh/";
-                    serverid=$serverid+1;
+                    serverid=$(( '$serverid' + 1 ));
                     echo -e  'server.'$serverid'='$worker':2888:3888' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
                     scp $ZOOKEEPER_HOME/config/zoo.cfg $username@$worker:$ZOOKEEPER_HOME/zoo.cfg;
                     read -p "Do you want to add more worker? (y/N) [ENTER] (n) " workeraccept;
