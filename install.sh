@@ -373,7 +373,6 @@ if [ $(id -u) -eq 0 ]; then
             if [ "$workeraccept" == "y" ] ; then 
                 while [ "$workeraccept" == "y" ] ; do 
                     read -p "Please enter worker IP Address [ENTER] " worker;
-                    echo -e  ''$worker' # Worker' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
                     if [[ -f "~/.ssh/id_rsa" && -f "~/.ssh/id_rsa.pub" ]]; then 
                         echo "SSH already setup";
                         echo "";
