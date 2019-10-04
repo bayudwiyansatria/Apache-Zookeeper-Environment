@@ -60,8 +60,9 @@ if [ $(id -u) -eq 0 ]; then
         exit 1;
     fi
 
+    echo "";
     echo "################################################";
-    echo "##          Check Zookeeper Environment        ##";
+    echo "##          Check Zookeeper Environment       ##";
     echo "################################################";
     echo "";
 
@@ -99,6 +100,7 @@ if [ $(id -u) -eq 0 ]; then
         fi
     fi
 
+    echo "";
     echo "################################################";
     echo "##         Collect Zookeper Distribution      ##";
     echo "################################################";
@@ -403,7 +405,7 @@ if [ $(id -u) -eq 0 ]; then
                     ssh $worker "chown -R $username:$username /home/$username/.ssh/";
                     serverid=$(( $serverid + 1 ));
                     echo -e  'server.'$serverid'='$worker':2888:3888' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
-                    scp $ZOOKEEPER_HOME/config/zoo.cfg $username@$worker:$ZOOKEEPER_HOME/zoo.cfg;
+                    scp $ZOOKEEPER_HOME/conf/zoo.cfg $username@$worker:$ZOOKEEPER_HOME/conf/zoo.cfg;
                     read -p "Do you want to add more worker? (y/N) [ENTER] (n) " workeraccept;
                     workeraccept=$(printf '%s\n' "$workeraccept" | LC_ALL=C tr '[:upper:]' '[:lower:]' | sed 's/"//g'); 
                 done
