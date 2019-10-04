@@ -402,7 +402,7 @@ if [ $(id -u) -eq 0 ]; then
                     ssh $worker "./express-install.sh" $version "$mirror" "$username" "$password" "$ipaddr";
                     scp /home/$username/.ssh/authorized_keys /home/$username/.ssh/id_rsa /home/$username/.ssh/id_rsa.pub $username@$worker:/home/$username/.ssh/
                     ssh $worker "chown -R $username:$username /home/$username/.ssh/";
-                    serverid=$(( '$serverid' + 1 ));
+                    serverid=$(( $serverid + 1 ));
                     echo -e  'server.'$serverid'='$worker':2888:3888' >> $ZOOKEEPER_HOME/conf/zoo.cfg;
                     scp $ZOOKEEPER_HOME/config/zoo.cfg $username@$worker:$ZOOKEEPER_HOME/zoo.cfg;
                     read -p "Do you want to add more worker? (y/N) [ENTER] (n) " workeraccept;
